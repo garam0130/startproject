@@ -1,0 +1,46 @@
+{% extends "blog/layout.html" %}
+{% load bootstrap3 %}
+
+
+{% block content %}
+
+<section id="main-content">
+      <section class="wrapper">
+
+                    <div class="col-md-12">
+                          <div class="content-panel">
+                              <h4><i class="fa fa-angle-right"></i> Applicants list</h4>
+                              <hr>
+                              <table class="table">
+                                  <thead>
+                                  <tr>
+                                      <th>#</th>
+                                      <th>Group</th>
+                                      <th>applicants id</th>
+                                      <th>memo</th>
+                                      <th>수락</th>
+
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  {% for post in applicant_list %}
+                                  <tr>
+                                      <td>{{ post.id }}</td>
+                                      <td>{{ post.group }}</td>
+                                      <td>{{ post.applicant }}</td>
+                                      <td>{{ post.memo }}</td>
+                                      <td> <a href="{% url "blog:applicant_approve" %}" class="btn btn-danger">Y/N</a></td>
+                                  </tr>
+                                  {% endfor %}
+                                  </tbody>
+                              </table>
+                          </div><! --/content-panel -->
+                      </div><!-- /col-md-12 -->
+
+
+
+    </section>
+  </section>
+
+
+{% endblock %}

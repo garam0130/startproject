@@ -1,0 +1,16 @@
+<div id="comment_{{ comment.pk }}" class="media">
+    <div class="media-left">
+        <img class="media-object img-rounded" src="http://lorempixel.com/64/64/cats/" alt="랜덤 이미지" />
+    </div>
+    <div class="media-body">
+        <!-- <h4 class="media-heading">{{ comment.content }}</h4> -->
+        <p>
+            {{ comment.content }}
+            <span class="updated_at">at {{ comment.updated_at }}</span>
+            <a href="{% url "blog:comment_edit" comment.post.pk comment.pk %}" class="btn_edit">E</a>
+
+            <a href="{% url "blog:comment_delete" comment.post.pk comment.pk %}" class="btn_delete" data-comment-id="comment_{{ comment.pk }}">D</a>
+
+        </p>
+    </div>
+</div>

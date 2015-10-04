@@ -1,0 +1,120 @@
+{% extends "blog/layout.html" %}
+{% load bootstrap3 %}
+
+{% block extra_head %}
+<style>
+#comment_list .updated_at {
+    color: #ccc;
+    font-size: 11px;
+    font-style: italic;
+}
+#comment_list .btn_edit {
+    color: #999;
+    font-size: 11px;
+}
+#comment_list .btn_delete {
+    color: #f99;
+    font-size: 11px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section id="main-content">
+      <section class="wrapper">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+          
+            <h2>{{ post.name }}</h2>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% if post.image %}
+                        <p><img src="{{ post.image.url }}" /></p>
+                    {% endif %}
+
+                    {{ post.content|linebreaks }}
+                    <p class="pull-right">
+                        <a href="{% url "blog:group_list" %}" class="btn btn-default">글목록</a>
+                        <a href="{% url "blog:edit" post.pk %}" class="btn btn-primary">수정</a>
+                        <a href="{% url "blog:delete" post.pk %}" class="btn btn-danger">삭제</a>
+                    </p>
+                </div>
+            </div>
+
+            <h4>댓글</h4>
+
+            <form id="comment_form" action="{% url "blog:comment_new" post.pk %}" method="POST">
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary btn-block">
+                        {% bootstrap_icon "star" %} 댓글 남기기
+                    </button>
+                {% endbuttons %}
+            </form>
+
+            <div id="comment_list">
+            {% for comment in group.comment_set.all %}
+                {% include "blog/comment_row.html" %}
+            {% endfor %}
+
+           
+            </div>
+        </div>
+    </div>
+</div>
+
+    </section>
+  </section>
+
+<script>
+$(function() {
+    $("#comment_form").submit(function() {
+        var url = $(this).attr("action");
+        var content_value = $(this).find("textarea[name=content]").val();
+
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: {
+                content: content_value
+            }
+        }).fail(function() {
+            alert("fail");
+        }).done(function(html) {
+            $("#comment_list").prepend(html);
+            alert("success");
+        });
+
+        return false;
+    });
+
+    $(document).on('click', '.btn_delete', function() {
+        if ( confirm("Are you sure?") ) {
+            var url = $(this).attr("href");
+            var comment_id = $(this).data("comment-id");
+
+            $.ajax({
+                url: url,
+                method: "POST"
+            }).fail(function() {
+                alert("fail");
+            }).done(function() {
+                $("#" + comment_id).remove();
+                alert("done");
+            });
+        }
+        return false;
+    });
+
+    // $(".btn_delete").click(function() {});
+});
+</script>
+{% endblock %}
+
+
+
+
+

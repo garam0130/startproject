@@ -1,0 +1,62 @@
+{% extends "blog/layout.html" %}
+{% load thumbnail %}
+
+{% block extra_head %}
+<style>
+
+  .post {
+    margin-top: 5px;
+  }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+  <section id="main-content">
+      <section class="wrapper">
+          <div class="container">
+              <div class="row">
+                  {% for post in group_list %}
+                  <div class="col-xs-6 col-sm-4 col-md-3 post">
+                      <div class="thumbnail">
+                          <a href="{% url "blog:detail" post.pk %}">
+                              {% if post.image %}
+                                  {% thumbnail post.image "400x400" crop="center" quality=80 as im %}
+                                      <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                       {% endthumbnail %}
+                              {% else %}
+                                  <img src="http://lorempixel.com/400/400/cats/" />
+                              {% endif %}
+
+                              <div class="caption">
+
+                                  <h5>{{ post.name }}</h5>
+                                  <hr class="mh-0 mv-5">
+                                  <i class="fa fa-user fa-lg gray"></i>
+                                  <span>{{ post.apply_set.count }}</span>
+                                  <i class="fa fa-heart fa-lg gray"></i> <span>1</span>
+                                  <i class="fa fa-comment-o fa-lg gray"></i> <span>1</span>
+
+
+                              </div>
+                          </a>
+                      </div>
+                  </div>
+                  {% empty %}
+            <div class="alert alert-warning">
+                등록된 포스팅이 없습니다.
+            </div>
+            {% endfor %}
+    </div>
+</div>
+
+
+
+    </section>
+  </section>
+
+
+
+  {% endblock %}

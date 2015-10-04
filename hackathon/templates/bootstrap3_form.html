@@ -1,0 +1,23 @@
+{% load bootstrap3 %}
+
+<div class="panel panel-default">
+    {% if title %}
+        <div class="panel-heading">
+            <h4>{{ title }}</h4>
+        </div>
+    {% endif %}
+    <div class="panel-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form %}
+                {% bootstrap_form form %}
+            {% endif %}
+            {% buttons %}
+                <button type="submit" class="{{ submit_class_name|default:"btn btn-primary" }} btn-block">
+                    {% bootstrap_icon "star" %}
+                    {{ submit_label|default:"Submit" }}
+                </button>
+            {% endbuttons %}
+        </form>
+    </div>
+</div>

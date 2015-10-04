@@ -1,0 +1,17 @@
+{% extends "blog/layout.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {% with title="Are you sure?" submit_class_name="btn btn-danger" submit_label="후회없습니다." %}
+                {% include "bootstrap3_form.html" %}
+            {% endwith %}
+
+            <a href="{% url "blog:detail" comment.post.pk %}" class="btn btn-default">글보기</a>
+            <a href="{% url "blog:group_list" %}" class="btn btn-default">글목록</a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

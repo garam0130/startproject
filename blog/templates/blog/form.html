@@ -1,0 +1,29 @@
+{% load bootstrap3 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+
+
+ <button type="submit" class="btn btn-primary">
+
+ {% bootstrap_icon "star" %} Submit
+
+ </button>
+
+ {% endbuttons %}
+
+</form>
+
+        </div>
+    </div>
+</div>
